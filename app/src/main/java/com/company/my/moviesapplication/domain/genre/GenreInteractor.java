@@ -1,7 +1,5 @@
 package com.company.my.moviesapplication.domain.genre;
 
-import com.company.my.moviesapplication.data.GenreRepositoryImpl;
-
 import java.util.List;
 
 import javax.inject.Inject;
@@ -17,7 +15,7 @@ public class GenreInteractor {
     private GenreRepository mGenreRepository;
 
     @Inject
-    public GenreInteractor (GenreRepositoryImpl genreRepository){
+    public GenreInteractor (GenreRepository genreRepository){
         mGenreRepository = genreRepository;
     }
 

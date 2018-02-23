@@ -2,6 +2,7 @@ package com.company.my.moviesapplication.data;
 
 import android.text.TextUtils;
 
+import com.company.my.moviesapplication.di.activity.ActivityScope;
 import com.company.my.moviesapplication.domain.genre.GenreModel;
 import com.company.my.moviesapplication.domain.genre.GenreRepository;
 import com.company.my.moviesapplication.utils.MockMovieData;
@@ -18,13 +19,14 @@ import io.reactivex.processors.PublishProcessor;
  * Created by Oleja on 22.02.2018.
  */
 
+@ActivityScope
 public class GenreRepositoryImpl implements GenreRepository {
 
-    private static final FlowableProcessor<List<GenreModel>> processor = PublishProcessor.create();
+    private final FlowableProcessor<List<GenreModel>> processor;
 
     @Inject
     public GenreRepositoryImpl() {
-        // TODO: 23.02.2018  initialize RestApi, DBManager ect
+        processor = PublishProcessor.create();
     }
 
     @Override

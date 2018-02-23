@@ -3,11 +3,12 @@ package com.company.my.moviesapplication.presentation.activity_main;
 import android.app.Activity;
 import android.support.v4.app.Fragment;
 
+import com.company.my.moviesapplication.data.GenreRepositoryImpl;
 import com.company.my.moviesapplication.di.activity.ActivityScope;
+import com.company.my.moviesapplication.domain.genre.GenreRepository;
 import com.company.my.moviesapplication.presentation.activity_main.genres.GenresFragment;
 import com.company.my.moviesapplication.presentation.activity_main.genres.injection.GenresFragmentComponent;
 import com.company.my.moviesapplication.presentation.activity_main.movies.MoviesFragment;
-import com.company.my.moviesapplication.presentation.activity_main.movies.MoviesFragmentContract;
 import com.company.my.moviesapplication.presentation.activity_main.movies.injection.MoviesFragmentComponent;
 
 import dagger.Binds;
@@ -34,6 +35,11 @@ public interface MainActivityComponent extends AndroidInjector<MainActivity> {
         @Provides
         Activity provideActivity(MainActivity activity) {
             return activity;
+        }
+
+        @Provides
+        GenreRepository provideGenreRepository(GenreRepositoryImpl repository) {
+            return repository;
         }
     }
 
