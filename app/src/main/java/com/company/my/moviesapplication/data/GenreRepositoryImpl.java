@@ -24,7 +24,7 @@ public class GenreRepositoryImpl implements GenreRepository {
 
     @Inject
     public GenreRepositoryImpl() {
-
+        // TODO: 23.02.2018  initialize RestApi, DBManager ect
     }
 
     @Override
@@ -50,9 +50,7 @@ public class GenreRepositoryImpl implements GenreRepository {
                             genreModel.setMovies(movieModels);
                             return Flowable.just(genreModel);
                         })).toList().toFlowable()
-                .subscribe(t -> {
-                            processor.onNext(t);
-                        },
+                .subscribe(processor::onNext,
                         throwable -> {
                             // TODO: 23.02.2018 handle error
                         }, () -> {

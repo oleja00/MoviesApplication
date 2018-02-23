@@ -38,16 +38,12 @@ public final class GenresPresenter implements BasePresenter<GenresFragmentContra
     }
 
     public void getAllGenresWithMovies() {
+        // TODO: 22.02.2018 handle error
         RxUtils.manage(this, mGenreInteractor.getAllGenresWithMovies("")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
-                        genreModels -> {
-                            mView.showGenres(genreModels);
-                        },
-                        throwable -> {
-                            throwable.printStackTrace();
-                            // TODO: 22.02.2018 handle error
-                        }));
+                        genreModels -> mView.showGenres(genreModels),
+                        Throwable::printStackTrace));
     }
 }

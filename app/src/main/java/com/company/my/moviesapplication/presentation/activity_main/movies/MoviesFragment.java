@@ -3,6 +3,7 @@ package com.company.my.moviesapplication.presentation.activity_main.movies;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
@@ -23,7 +24,6 @@ import dagger.android.support.AndroidSupportInjection;
 public class MoviesFragment extends BaseFragment implements MoviesFragmentContract.View {
 
     public static final String GENRE_TAG = "genre";
-    public static final String MOVIES_KEY = "movies";
 
     public static MoviesFragment newInstance(String genreName) {
         MoviesFragment moviesFragment = new MoviesFragment();
@@ -46,14 +46,14 @@ public class MoviesFragment extends BaseFragment implements MoviesFragmentContra
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_movies, container, false);
         setRetainInstance(true);
         return mBinding.getRoot();
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mBinding.setEventListener(mPresenter);
         mPresenter.attachView(this);

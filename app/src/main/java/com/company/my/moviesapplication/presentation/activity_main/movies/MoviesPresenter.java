@@ -31,6 +31,7 @@ public final class MoviesPresenter implements BasePresenter<MoviesFragmentContra
     @Override
     public void detachView() {
         mView = null;
+        RxUtils.unsubscribe(this);
     }
 
     @Nullable
@@ -39,17 +40,13 @@ public final class MoviesPresenter implements BasePresenter<MoviesFragmentContra
     }
 
     public void getMovies(String genreName) {
+        // TODO: 22.02.2018 handle error
         RxUtils.manage(this, genreName, mGenreInteractor.getAllGenresWithMovies(genreName)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
-                        genreModels -> {
-                            mView.showMovies(genreModels.get(0).getMovies());
-                        },
-                        throwable -> {
-                            throwable.printStackTrace();
-                            // TODO: 22.02.2018 handle error
-                        }));
+                        genreModels -> mView.showMovies(genreModels.get(0).getMovies()),
+                        Throwable::printStackTrace));
     }
 
 }
