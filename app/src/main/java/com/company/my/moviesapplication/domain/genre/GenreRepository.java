@@ -9,5 +9,6 @@ import io.reactivex.Flowable;
  */
 
 public interface GenreRepository {
-    Flowable<List<GenreModel>> getAllGenresWithFilms();
+    Flowable<List<GenreModel>> getAllGenresWithFilms(String genre);
+    void setFilter(String filter);
 }

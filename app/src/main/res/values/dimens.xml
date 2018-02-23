@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="search_icon_size">34dp</dimen>
+    <dimen name="default_activity_margin">16dp</dimen>
+    <dimen name="big_text">20sp</dimen>
+    <dimen name="small_view_margin">4dp</dimen>
 </resources>

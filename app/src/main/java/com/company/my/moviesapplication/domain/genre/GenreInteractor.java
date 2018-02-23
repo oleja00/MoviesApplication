@@ -21,7 +21,11 @@ public class GenreInteractor {
         mGenreRepository = genreRepository;
     }
 
-    public Flowable<List<GenreModel>> getAllGenresWithMovies(){
-        return mGenreRepository.getAllGenresWithFilms();
+    public Flowable<List<GenreModel>> getAllGenresWithMovies(String genreName){
+        return mGenreRepository.getAllGenresWithFilms(genreName);
+    }
+
+    public void search(String searchText){
+        mGenreRepository.setFilter(searchText);
     }
 }

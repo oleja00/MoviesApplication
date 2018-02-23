@@ -42,7 +42,7 @@ public class MockMovieData {
 
         genreComedy.setId(1);
 
-        genreComedy.setName("Horror");
+        genreComedy.setName("Comedy");
 
         List<MovieModel> comedies = new ArrayList<>();
 
@@ -64,7 +64,7 @@ public class MockMovieData {
 
         genreDrama.setId(2);
 
-        genreDrama.setName("Horror");
+        genreDrama.setName("Drama");
 
         List<MovieModel> dramas = new ArrayList<>();
 

@@ -1,6 +1,7 @@
 package com.company.my.moviesapplication.domain.genre;
 
 import com.company.my.moviesapplication.domain.movie.MovieModel;
+import com.company.my.moviesapplication.presentation.common.SortedEntity;
 
 import java.util.List;
 
@@ -8,7 +9,7 @@ import java.util.List;
  * Created by Oleja on 21.02.2018.
  */
 
-public class GenreModel {
+public class GenreModel implements SortedEntity {
 
     private long id;
 
@@ -38,6 +39,16 @@ public class GenreModel {
 
     public void setMovies(List<MovieModel> movies) {
         this.movies = movies;
+    }
+
+    @Override
+    public boolean areItemsTheSame(SortedEntity sortedEntity) {
+        return id >=0 && id == (((GenreModel) sortedEntity).getId());
+    }
+
+    @Override
+    public boolean areContentsTheSame(SortedEntity sortedEntity) {
+        return equals(sortedEntity);
     }
 
     @Override

@@ -3,31 +3,38 @@ package com.company.my.moviesapplication.presentation.activity_main.genres;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.design.widget.TabLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.company.my.moviesapplication.R;
 import com.company.my.moviesapplication.databinding.FragmentGenresBinding;
+import com.company.my.moviesapplication.domain.genre.GenreModel;
+import com.company.my.moviesapplication.presentation.activity_main.genres.common.FragmentPagerAdapter;
 import com.company.my.moviesapplication.presentation.common.BaseFragment;
 
-import dagger.android.support.AndroidSupportInjection;
+import java.util.List;
 
 import javax.inject.Inject;
 
+import dagger.android.support.AndroidSupportInjection;
+
 public class GenresFragment extends BaseFragment implements GenresFragmentContract.View {
+
+    public static GenresFragment newInstance() {
+        return new GenresFragment();
+    }
 
     @Inject
     GenresPresenter mPresenter;
     private FragmentGenresBinding mBinding;
 
-    public static GenresFragment newInstance() {
-        return new GenresFragment();
-    }
+    private FragmentPagerAdapter mFragmentPagerAdapter;
+
+    private SearchViewModel mSearchViewModel;
 
     @Override
     public void onAttach(Context context) {
@@ -38,6 +45,7 @@ public class GenresFragment extends BaseFragment implements GenresFragmentContra
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_genres, container, false);
+        mFragmentPagerAdapter = new FragmentPagerAdapter(getChildFragmentManager());
         return mBinding.getRoot();
     }
 
@@ -46,6 +54,16 @@ public class GenresFragment extends BaseFragment implements GenresFragmentContra
         super.onViewCreated(view, savedInstanceState);
         mBinding.setEventListener(mPresenter);
         mPresenter.attachView(this);
+        mSearchViewModel = new SearchViewModel(mPresenter);
+        mBinding.setModel(mSearchViewModel);
+
+        mPresenter.getAllGenresWithMovies();
+
+        mBinding.viewPager.setAdapter(mFragmentPagerAdapter);
+        mBinding.tabs.setupWithViewPager(mBinding.viewPager);
+        mBinding.tabs.setTabMode(TabLayout.MODE_FIXED);
+
+        mSearchViewModel.onViewStateRestored(savedInstanceState);
     }
 
     @Override
@@ -54,44 +72,15 @@ public class GenresFragment extends BaseFragment implements GenresFragmentContra
         mPresenter.detachView();
     }
 
-    private class FragmentPagerAdapter extends FragmentStatePagerAdapter {
-
-//        FragmentPagerAdapter(FragmentManager fm) {
-//            super(fm);
-//        }
-//
-//        @Override
-//        public Fragment getItem(int i) {
-//            switch (i) {
-//                case TAB_MY_IDEAS:
-//                    return ContentFragment.newInstance(ContentFragment.TAB_TYPE_IDEAS, userModel.id());
-//                case TAB_MY_CHALLENGES:
-//                    return ContentFragment.newInstance(ContentFragment.TAB_TYPE_CHALLENGES, userModel.id());
-//            }
-//            return null;
-//        }
-//
-//        @Override
-//        public void destroyItem(ViewGroup container, int position, Object object) {
-//            super.destroyItem(container, position, object);
-//        }
-//
-//        @Override
-//        public int getCount() {
-//            return COUNT_TAB;
-//        }
-//
-//        @Override
-//        public CharSequence getPageTitle(int position) {
-//            switch (position) {
-//                case TAB_MY_IDEAS:
-//                    return getString(R.string.CONTENT_TAB_IDEAS);
-//                case TAB_MY_CHALLENGES:
-//                    return getString(R.string.CONTENT_TAB_CHALLENGES);
-//                default:
-//                    throw new IllegalArgumentException("Exceeded max of tabs");
-//            }
-//        }
+    @Override
+    public void showGenres(List<GenreModel> genreModels) {
+        mBinding.viewPager.setOffscreenPageLimit(mFragmentPagerAdapter.getCount());
+        mFragmentPagerAdapter.setGenreModelList(genreModels);
     }
 
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        mSearchViewModel.onSaveInstanceState(outState);
+    }
 }
