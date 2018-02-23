@@ -36,6 +36,8 @@ public class GenresFragment extends BaseFragment implements GenresFragmentContra
 
     private SearchViewModel mSearchViewModel;
 
+    private Bundle bundle;
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -57,13 +59,13 @@ public class GenresFragment extends BaseFragment implements GenresFragmentContra
         mSearchViewModel = new SearchViewModel(mPresenter);
         mBinding.setModel(mSearchViewModel);
 
-        mPresenter.getAllGenresWithMovies();
 
         mBinding.viewPager.setAdapter(mFragmentPagerAdapter);
         mBinding.tabs.setupWithViewPager(mBinding.viewPager);
         mBinding.tabs.setTabMode(TabLayout.MODE_FIXED);
+        mPresenter.getAllGenresWithMovies();
 
-        mSearchViewModel.onViewStateRestored(savedInstanceState);
+        bundle = savedInstanceState;
     }
 
     @Override
@@ -76,6 +78,12 @@ public class GenresFragment extends BaseFragment implements GenresFragmentContra
     public void showGenres(List<GenreModel> genreModels) {
         mBinding.viewPager.setOffscreenPageLimit(mFragmentPagerAdapter.getCount());
         mFragmentPagerAdapter.setGenreModelList(genreModels);
+        if (bundle != null) {
+            mSearchViewModel.onViewStateRestored(bundle);
+            bundle = null;
+        }
+
+
     }
 
     @Override

@@ -47,7 +47,7 @@ public class FragmentPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return mGenreModelList.get(position).getName() +
-                "(" + mGenreModelList.get(position).getMovies().size() + ")";
+        int size = mGenreModelList.get(position).getMovies().size();
+        return mGenreModelList.get(position).getName() + (size>0 ? "(" + size + ")" : "");
     }
 }
