@@ -51,7 +51,7 @@
                     android:text="@={model.searchText}"
                     android:textColor="@color/colorPrimary"
                     android:textColorHint="@color/colorPrimary"
-                    android:textSize="16sp"
+                    android:textSize="@dimen/medium_text"
                     android:windowSoftInputMode="stateHidden" />
 
             </LinearLayout>

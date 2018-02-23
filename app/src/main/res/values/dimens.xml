@@ -7,4 +7,5 @@
     <dimen name="searc_vertical_margin">12dp</dimen>
     <dimen name="search_horizontal_margin">18dp</dimen>
     <dimen name="divider_height">1dp</dimen>
+    <dimen name="medium_text">16sp</dimen>
 </resources>
